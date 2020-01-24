@@ -83,7 +83,7 @@ export default {
       }
     },
     updateTotal() {
-      this.totalAmount()
+      this.totalAmount
     }
   },
   computed: {
