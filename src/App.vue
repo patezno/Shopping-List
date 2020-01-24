@@ -1,15 +1,23 @@
 <template>
+  
   <div id="app" class="container">
+    
     <h1>Shoppping List</h1>
-    <ShoppingList></ShoppingList>
+    
+    <ShoppingList :products="products"></ShoppingList>
+    
     <div>
       <span>Total expense: {{total}}</span>
     </div>
-    <Form v-on:newProduct="addProduct($event)"></Form>
+    
+    <Form @newProduct="addProduct($event)"></Form>
+
   </div>
+
 </template>
 
 <script>
+
 import Form from './components/Form'
 import ShoppingList from './components/ShoppingList'
 
@@ -22,17 +30,21 @@ export default {
   methods: {
     addProduct(product) {
       this.total += product.price
+      this.products.push(product)
     }
   },
   data() {
     return {
-      total: null
+      total: null,
+      products: []
     }
   }
 };
+
 </script>
 
 <style>
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -41,4 +53,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
