@@ -12,6 +12,11 @@
     
     <div class="container mTop">
       <ShoppingList :products="products" @removeProduct="removeProduct($event)"></ShoppingList>
+      
+      <div class="row right" v-if="totalAmount > 0">
+          <span>Total expense: {{totalAmount}} €</span>
+      </div>
+      
       <Form @newProduct="addProduct($event)" @removeLine="removeLine()"></Form>
     </div>
 
@@ -39,28 +44,32 @@ export default {
             Swal.fire({
               icon: 'error',
               title: 'Error',
-              text: 'The name alredy exists',
+              text: 'The name already exists',
               confirmButtonText: 'Retry',
               confirmButtonColor: 'green'
             })
             break
           } else {
             this.products.push(product)
+            this.updateTotal()
             break
           }
         }
       } else {
         this.products.push(product)
+        this.updateTotal()
       }
     },
     removeProduct(product) {
       for (let i = 0; this.products.length; i++) {
         if (this.products[i].name === product.name) {
           this.products.splice(i, 1)
+          this.updateTotal()
           break
         }
       }
-    }, removeLine() {
+    }, 
+    removeLine() {
       if (this.products.length === 0) {
         Swal.fire({
           icon: 'info',
@@ -70,7 +79,20 @@ export default {
         })
       } else {
         this.products.pop()
+        this.updateTotal()
       }
+    },
+    updateTotal() {
+      this.totalAmount()
+    }
+  },
+  computed: {
+    totalAmount() {
+      let total = 0
+      for (const product of this.products) {
+        total += product.price * product.quantity
+      }
+      return total
     }
   },
   data() {

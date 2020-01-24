@@ -15,14 +15,20 @@
         <tbody>
           <tr v-for="product in products" :key="product.name">
               <td>
-                  {{product.name}}
+                  <span v-bind:class="{'colorRed': product.price < 10}">
+                      {{product.name}}
+                  </span>
               </td>
               <td>
-                  {{product.price}} € x
+                  <span v-bind:class="{'colorRed': product.price < 10}">
+                      {{product.price}} € x
+                  </span>
               </td>
 
               <td>
-                  uds. = {{product.price * product.quantity}} €
+                  <span v-bind:class="{'colorRed': product.price < 10}">
+                      {{product.quantity}} unit/s = {{product.price * product.quantity}} €
+                  </span>
               </td>
               <td>
                   <a class="btn-floating btn-min green" @click="product.quantity += 1"><i class="material-icons">add</i></a>
@@ -32,10 +38,6 @@
         </tbody>
 
       </table>
-
-      <div class="row">
-          <span>Total expense: {{total}}</span>
-      </div>
 
     </div>
 
@@ -65,5 +67,9 @@ export default {
 </script>
 
 <style scoped>
+
+.colorRed {
+    color: red !important;
+}
 
 </style>
