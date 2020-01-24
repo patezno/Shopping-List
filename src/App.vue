@@ -11,7 +11,7 @@
     </div>
     
     <div class="container mTop">
-      <ShoppingList :products="products" @removeProduct="removeProduct($event)"></ShoppingList>
+      <ShoppingList v-if="products.length > 0" :products="products" @removeProduct="removeProduct($event)"></ShoppingList>
       
       <div class="row right" v-if="totalAmount > 0">
           <span>Total expense: {{totalAmount}} €</span>
