@@ -6,13 +6,13 @@
       <form class="col s12" @submit.prevent="onSubmit()">
         <div class="row">
           
-          <div class="input-field col s6">
+          <div class="input-field col s12 m6">
             <i class="material-icons prefix">add_shopping_cart</i>
             <input id="product" type="text" class="validate" v-model="product.name"/>
             <label for="product">Product</label>
           </div>
 
-          <div class="input-field col s6">
+          <div class="input-field col s12 m6">
             <i class="material-icons prefix">attach_money</i>
             <input id="price" type="number" class="validate" min="1" v-model.number="product.price"/>
             <label for="price">Price</label>
@@ -61,7 +61,7 @@ export default {
           confirmButtonText: 'Retry',
           confirmButtonColor: 'green'
         })
-        return;
+        return
       }
       let element = this.createNewElement(this.product.name, this.product.price);
       this.$emit('newProduct', element)

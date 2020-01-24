@@ -2,7 +2,7 @@
     
     <div id="ShoppingList">
         
-        <table class="highlight centered responsive-table">
+        <table class="highlight centered responsive-table row">
         <thead>
           <tr>
               <th>Name</th>
@@ -33,7 +33,7 @@
 
       </table>
 
-      <div>
+      <div class="row">
           <span>Total expense: {{total}}</span>
       </div>
 

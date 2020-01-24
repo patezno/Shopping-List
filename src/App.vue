@@ -1,12 +1,19 @@
 <template>
   
-  <div id="app" class="container">
+  <div id="app">
+
+    <div class="navbar-fixed">
+      <nav class="green">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo center">Shopping List</a>
+        </div>
+      </nav>
+    </div>
     
-    <h1>Shoppping List</h1>
-    
-    <ShoppingList :products="products" @removeProduct="removeProduct($event)"></ShoppingList>
-    
-    <Form @newProduct="addProduct($event)" @removeLine="products.pop()"></Form>
+    <div class="container mTop">
+      <ShoppingList :products="products" @removeProduct="removeProduct($event)"></ShoppingList>
+      <Form @newProduct="addProduct($event)" @removeLine="removeLine()"></Form>
+    </div>
 
   </div>
 
@@ -53,6 +60,17 @@ export default {
           break
         }
       }
+    }, removeLine() {
+      if (this.products.length === 0) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Empty',
+          text: 'There is no product to remove',
+          confirmButtonColor: 'green'
+        })
+      } else {
+        this.products.pop()
+      }
     }
   },
   data() {
@@ -72,11 +90,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 .mBtn {
   margin-left: 10px;
+}
+
+.mTop {
+  margin-top: 60px;
 }
 
 </style>
