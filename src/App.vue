@@ -4,13 +4,9 @@
     
     <h1>Shoppping List</h1>
     
-    <ShoppingList :products="products"></ShoppingList>
+    <ShoppingList :products="products" @removeProduct="removeProduct($event)"></ShoppingList>
     
-    <div>
-      <span>Total expense: {{total}}</span>
-    </div>
-    
-    <Form @newProduct="addProduct($event)"></Form>
+    <Form @newProduct="addProduct($event)" @removeLine="products.pop()"></Form>
 
   </div>
 
@@ -18,8 +14,9 @@
 
 <script>
 
-import Form from './components/Form'
-import ShoppingList from './components/ShoppingList'
+import Form from './components/Form/Form'
+import ShoppingList from './components/ShoppingList/ShoppingList'
+import Swal from 'sweetalert2'
 
 export default {
   name: "app",
@@ -29,13 +26,37 @@ export default {
   },
   methods: {
     addProduct(product) {
-      this.total += product.price
-      this.products.push(product)
+      if (this.products.length > 0) {
+        for (const prod of this.products) {
+          if (product.name === prod.name) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'The name alredy exists',
+              confirmButtonText: 'Retry',
+              confirmButtonColor: 'green'
+            })
+            break
+          } else {
+            this.products.push(product)
+            break
+          }
+        }
+      } else {
+        this.products.push(product)
+      }
+    },
+    removeProduct(product) {
+      for (let i = 0; this.products.length; i++) {
+        if (this.products[i].name === product.name) {
+          this.products.splice(i, 1)
+          break
+        }
+      }
     }
   },
   data() {
     return {
-      total: null,
       products: []
     }
   }
@@ -52,6 +73,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.mBtn {
+  margin-left: 10px;
 }
 
 </style>

@@ -20,16 +20,22 @@
               <td>
                   {{product.price}} € x
               </td>
+
               <td>
-                  uds. = {{product.price}} €
+                  uds. = {{product.price * product.quantity}} €
               </td>
               <td>
-                  <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">remove</i></a>
+                  <a class="btn-floating btn-min green" @click="product.quantity += 1"><i class="material-icons">add</i></a>
+                  <a class="btn-floating btn-min red mBtn" @click="product.quantity = removeItem(product)"><i class="material-icons">remove</i></a>
               </td>
           </tr>
         </tbody>
 
       </table>
+
+      <div>
+          <span>Total expense: {{total}}</span>
+      </div>
 
     </div>
 
@@ -39,9 +45,23 @@
     
 export default {
     name: 'ShoppingList',
-    props: ['products']
+    props: ['products'],
+    data() {
+        return {
+            total: null
+        }
+    },
+    methods: {
+        removeItem(product) {
+            if (product.quantity === 1) {
+                this.$emit('removeProduct', product)
+            } else {
+                return product.quantity - 1
+            }
+        }
+    }
 }
-    
+
 </script>
 
 <style scoped>

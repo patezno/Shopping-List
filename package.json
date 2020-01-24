@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.4.4",
     "materialize-css": "^1.0.0-rc.2",
+    "sweetalert2": "^9.7.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

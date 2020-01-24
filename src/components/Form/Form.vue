@@ -19,11 +19,11 @@
           </div>
 
           <div class="row">
-            <button class="btn waves-effect blue" type="submit" name="action">
+            <button class="btn green" type="submit" name="action">
                 Add
               <i class="material-icons right">add</i>
             </button>
-            <button class="btn waves-effect red" type="button" name="action">
+            <button class="btn red mBtn" type="button" name="action" @click="$emit('removeLine')">
                 Remove
               <i class="material-icons right">remove</i>
             </button>
@@ -39,6 +39,8 @@
 
 <script>
 
+import Swal from 'sweetalert2'
+
 export default {
   name: "Form", 
   data() {
@@ -51,13 +53,24 @@ export default {
   }, 
   methods: {
     onSubmit() {
-        let element = this.createNewElement(this.product.name, this.product.price);
-        this.$emit('newProduct', element)
+      if (!this.product.name || !this.product.price) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Warning',
+          text: 'Some information is missing, check it again',
+          confirmButtonText: 'Retry',
+          confirmButtonColor: 'green'
+        })
+        return;
+      }
+      let element = this.createNewElement(this.product.name, this.product.price);
+      this.$emit('newProduct', element)
     }, 
     createNewElement(product, price) {
         let newElement = {
             name: product, 
-            price: price
+            price: price,
+            quantity: 1
         }
         return newElement
     }
